@@ -43,3 +43,7 @@ public class CarService {
         return carRepository.findAll();
     }
 }
+
+//ResponseEntity<Class> //like dto
+//Simplify car-customer //remove relationship
+//What happens if 2 people rent the same car at the same time and how to fix it?
