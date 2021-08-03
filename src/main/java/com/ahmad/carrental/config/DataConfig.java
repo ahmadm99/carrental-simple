@@ -24,6 +24,9 @@ public class DataConfig {
             Customer customer2 = new Customer("Baraa");
             Customer customer3 = new Customer("Waleed");
 
+//            car1.setCustomer(customer1);
+//            customer1.setCar(car1);
+
 
             carRepository.saveAll(Arrays.asList(car1,car2,car3));
             customerRepository.saveAll(Arrays.asList(customer1,customer2,customer3));
