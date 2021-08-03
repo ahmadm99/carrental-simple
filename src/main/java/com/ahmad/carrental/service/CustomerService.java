@@ -1,7 +1,9 @@
 package com.ahmad.carrental.service;
 
+import com.ahmad.carrental.DTO.CustomerDTO;
 import com.ahmad.carrental.exception.ElementIsBusyException;
 import com.ahmad.carrental.exception.IdNotFoundException;
+import com.ahmad.carrental.factory.CustomerFactory;
 import com.ahmad.carrental.model.Car;
 import com.ahmad.carrental.model.Customer;
 import com.ahmad.carrental.repository.CarRepository;
@@ -60,5 +62,11 @@ public class CustomerService {
             throw new ElementIsBusyException("Customer is currently renting a car");
         }
         customerRepository.deleteById(customerId);
+    }
+
+    public Customer createCustomer(CustomerDTO customerDTO) {
+        Customer customer = CustomerFactory.createCustomer();
+        customer.setName(customerDTO.getName());
+        return customerRepository.save(customer);
     }
 }

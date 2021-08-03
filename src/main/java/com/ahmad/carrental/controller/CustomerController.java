@@ -1,5 +1,7 @@
 package com.ahmad.carrental.controller;
 
+import com.ahmad.carrental.DTO.CustomerDTO;
+import com.ahmad.carrental.factory.CustomerFactory;
 import com.ahmad.carrental.model.Customer;
 import com.ahmad.carrental.repository.CustomerRepository;
 import com.ahmad.carrental.service.CustomerService;
@@ -51,5 +53,10 @@ public class CustomerController {
         body.put("message","Customer Deleted Successfully");
         body.put("status", HttpStatus.OK);
         return new ResponseEntity<>(body, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "add/customer")
+    public Customer createCustomer(@RequestBody CustomerDTO customerDTO){
+        return customerService.createCustomer(customerDTO);
     }
 }
