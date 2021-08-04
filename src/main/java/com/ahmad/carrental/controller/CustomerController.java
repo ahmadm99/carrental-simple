@@ -29,7 +29,7 @@ public class CustomerController {
     }
 
     @PutMapping(path = "customers/{customerId}/cars/{carId}")
-    public ResponseEntity<Object> rentCar(@PathVariable("customerId") Long customerId, @PathVariable("carId") Long carId){
+    public ResponseEntity<Object> rentCar(@PathVariable("customerId") Long customerId, @PathVariable("carId") Long carId) throws InterruptedException {
          customerService.rentCar(customerId,carId);
         HashMap<String, Object> body = new HashMap<>();
         body.put("message","Car Rented Successfully");
