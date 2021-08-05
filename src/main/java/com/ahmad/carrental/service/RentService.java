@@ -25,7 +25,6 @@ public class RentService {
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void rentCar(String customer, Long carId) throws InterruptedException, CannotAcquireLockException {
-        TimeUnit.SECONDS.sleep(2);
         if(!carRepository.existsById(carId)){
             throw new IdNotFoundException("No car found with id = "+carId);
         }
@@ -33,9 +32,10 @@ public class RentService {
             throw new ElementIsBusyException("Car is already rented");
         }
         Car car = carRepository.findById(carId).get();
+        TimeUnit.SECONDS.sleep(2);
         car.setOwner(customer);
         try {
-            carRepository.saveAndFlush(car);
+            carRepository.save(car);
         } catch (CannotAcquireLockException exception) {
             throw new ElementIsBusyException("Sorry you were late. Car with id = " + carId + " is already rented");
         }
@@ -47,3 +47,6 @@ public class RentService {
         carRepository.save(car);
     }
 }
+//retryable + serializable
+//add admin model. with username,email,password
+//admin can sign in with either username or email
