@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class CustomerService {
+public class RentService {
 
 
     @Autowired
@@ -26,6 +26,9 @@ public class CustomerService {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void rentCar(String customer, Long carId) throws InterruptedException, CannotAcquireLockException {
         TimeUnit.SECONDS.sleep(2);
+        if(!carRepository.existsById(carId)){
+            throw new IdNotFoundException("No car found with id = "+carId);
+        }
         if (carRepository.getById(carId).getOwner() != null) {
             throw new ElementIsBusyException("Car is already rented");
         }
