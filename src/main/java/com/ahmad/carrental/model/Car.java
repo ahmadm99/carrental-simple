@@ -3,6 +3,7 @@ package com.ahmad.carrental.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -26,18 +27,7 @@ public class Car {
     @NonNull
     private String license;
 
-    @NonNull
-    private Boolean available;
+    private String owner;
 
-//    private String owner;
-
-    @JsonIgnoreProperties("car")
-    @OneToOne(cascade={CascadeType.PERSIST, CascadeType.DETACH})
-    @JoinTable(name = "customer_car",
-            joinColumns =
-                    { @JoinColumn(name = "customer_id", referencedColumnName = "id") },
-            inverseJoinColumns =
-                    { @JoinColumn(name = "car_id", referencedColumnName = "id") })
-    private Customer customer;
 
 }

@@ -14,6 +14,6 @@ import java.util.Optional;
 
 public interface CarRepository extends JpaRepository<Car, Long> {
 //    @Query(value = "SELECT * FROM Car WHERE available = 1", nativeQuery = true)
-    @Query("SELECT c FROM Car c where c.available = 1")
+    @Query("SELECT c FROM Car c where c.owner = null")
     List<Car> findAvailableCars();
 }

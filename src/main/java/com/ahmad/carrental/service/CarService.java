@@ -25,7 +25,6 @@ public class CarService {
         Car car = CarFactory.createCar();
         car.setModel(carDTO.getModel());
         car.setLicense(carDTO.getLicense());
-        car.setAvailable(carDTO.getAvailable());
         return carRepository.save(car);
     }
 
@@ -33,7 +32,7 @@ public class CarService {
         if(!carRepository.existsById(carId)){
             throw new IdNotFoundException("No car found with Id = "+carId);
         }
-        if(carRepository.getById(carId).getCustomer() != null){
+        if(carRepository.getById(carId).getOwner() != null){
             throw new ElementIsBusyException("Car is currently rented");
         }
         carRepository.deleteById(carId);
