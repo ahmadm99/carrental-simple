@@ -6,8 +6,10 @@ import com.ahmad.carrental.model.Car;
 import com.ahmad.carrental.service.CarService;
 import com.ahmad.carrental.service.RentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -46,6 +48,7 @@ public class CarController {
     }
 
     @PutMapping(path = "customers/{customer}/cars/{carId}")
+//    @Retryable(value = CannotAcquireLockException.class)
     public ResponseEntity<ResponseDTO> rentCar(@PathVariable("customer") String customer, @PathVariable("carId") Long carId) throws InterruptedException {
         rentService.rentCar(customer,carId);
         return new ResponseEntity<>(new ResponseDTO("Car rented successfully"), HttpStatus.OK);

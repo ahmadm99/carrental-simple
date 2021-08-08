@@ -7,6 +7,8 @@ import com.ahmad.carrental.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.retry.annotation.EnableRetry;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 
@@ -24,6 +26,7 @@ public class RentService {
     CarRepository carRepository;
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
+    @Retryable(value = CannotAcquireLockException.class, maxAttempts = 4)
     public void rentCar(String customer, Long carId) throws InterruptedException, CannotAcquireLockException {
         if(!carRepository.existsById(carId)){
             throw new IdNotFoundException("No car found with id = "+carId);
@@ -31,14 +34,14 @@ public class RentService {
         if (carRepository.getById(carId).getOwner() != null) {
             throw new ElementIsBusyException("Car is already rented");
         }
-        Car car = carRepository.findById(carId).get();
         TimeUnit.SECONDS.sleep(2);
+        Car car = carRepository.findById(carId).get();
         car.setOwner(customer);
-        try {
+//        try {
             carRepository.save(car);
-        } catch (CannotAcquireLockException exception) {
-            throw new ElementIsBusyException("Sorry you were late. Car with id = " + carId + " is already rented");
-        }
+//        } catch (CannotAcquireLockException exception) {
+//            throw new ElementIsBusyException("Sorry you were late. Car with id = " + carId + " is already rented");
+//        }
     }
 
     public void deleteRent(Long carId) {
