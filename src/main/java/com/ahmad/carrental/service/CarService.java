@@ -47,3 +47,6 @@ public class CarService {
 //Simplify car-customer //remove relationship
 //What happens if 2 people rent the same car at the same time and how to fix it?
 
+//don't use basic auth
+//sign in with email/facebook
+//login with postman not basic auth + get request

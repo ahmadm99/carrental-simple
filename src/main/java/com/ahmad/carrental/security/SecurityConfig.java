@@ -47,12 +47,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe();
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web
+//                .ignoring()
+//                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder()
